@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "322821549425",
+    "project_id": "happy-paws-9f12c",
+    "storage_bucket": "happy-paws-9f12c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322821549425:android:faa5b4d903fb5e36901ad0",
+        "android_client_info": {
+          "package_name": "com.vishwas.happy_paws"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322821549425-stvqjbuun82mosdl7p4hr4amnvcq710q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6anJkQ5ZpVXb01Zaq7uB20ijsrr-Me_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322821549425-stvqjbuun82mosdl7p4hr4amnvcq710q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
