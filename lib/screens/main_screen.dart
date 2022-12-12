@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:happy_paws/components/drawer.dart';
 import 'package:happy_paws/components/constants.dart';
 import 'package:happy_paws/components/scroll_card.dart';
@@ -23,7 +21,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
@@ -51,17 +48,24 @@ class _MainScreenState extends State<MainScreen> {
           elevation: 0.0,
           actions: [
             Padding(
-              padding:EdgeInsets.only(right:16.w),
-              child: CircleAvatar(backgroundImage: AssetImage('images/user/user8.png'),backgroundColor: Color(0xfffddb3a),
-              child:GestureDetector(
-                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>UserProfile()));},),),
+              padding: EdgeInsets.only(right: 16.w),
+              child: CircleAvatar(
+                backgroundImage: AssetImage('images/user/user8.png'),
+                backgroundColor: Color(0xfffddb3a),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => UserProfile()));
+                  },
+                ),
+              ),
             )
           ]),
       drawer: SideDrawer(),
       body: Container(
         padding: EdgeInsets.only(left: 15.w, top: 5.h, right: 15.w),
         child: Column(
-         crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Hello ${loggedInUser.firstName}',
@@ -74,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
               padding: EdgeInsets.only(top: 5.h),
               child: Text('Find your specialist',
                   style: TextStyle(
-                    color: Color(0xff182B4B),
+                      color: Color(0xff182B4B),
                       fontSize: 20.sp,
                       fontFamily: 'Sora',
                       fontWeight: FontWeight.w700)),
@@ -96,12 +100,12 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.pets,
-                      size: 24.h,
-                      color: Color(0xff72CCD4),
-                    ),
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.pets,
+                    size: 24.h,
+                    color: Color(0xff72CCD4),
+                  ),
                 )
               ],
             ),
@@ -113,108 +117,151 @@ class _MainScreenState extends State<MainScreen> {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context)=>HealthServices()));},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HealthServices()));
+                      },
                       child: Container(
-                          margin: EdgeInsets.only(right: 16.w),
-                          height: 130.h,
-                          width: 100.h,
-                          decoration: BoxDecoration(
-                              color: Color(0xff70A5D7),
-                              borderRadius: BorderRadius.circular(20.r),
-                            boxShadow: kBoxShadow1,
-                          ),
+                        margin: EdgeInsets.only(right: 16.w),
+                        height: 130.h,
+                        width: 100.h,
+                        decoration: BoxDecoration(
+                          color: Color(0xff70A5D7),
+                          borderRadius: BorderRadius.circular(20.r),
+                          boxShadow: kBoxShadow1,
+                        ),
                         child: Column(
                           children: [
                             Container(
-                                padding: EdgeInsets.only(top: 10.h, left: 20.w, right: 20.w, bottom: 5.h),
+                                padding: EdgeInsets.only(
+                                    top: 10.h,
+                                    left: 20.w,
+                                    right: 20.w,
+                                    bottom: 5.h),
                                 alignment: Alignment.center,
-                                child: Image(image: AssetImage('images/health.png'),height: 80.h)),
+                                child: Image(
+                                    image: AssetImage('images/health.png'),
+                                    height: 80.h)),
                             Text('Health',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontFamily: 'Sora',
-                                    color: Colors.white,))
+                                  fontSize: 18.sp,
+                                  fontFamily: 'Sora',
+                                  color: Colors.white,
+                                ))
                           ],
                         ),
                       ),
                     ),
                     GestureDetector(
-                      onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Breed()));},
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Breed()));
+                      },
                       child: Container(
-                          margin: EdgeInsets.only(right: 16.w),
-                          height: 130.h,
-                          width: 100.w,
-                          decoration: BoxDecoration(
-                            color: Color(0xff72CCD4),
-                            borderRadius: BorderRadius.circular(20.r),
-                            boxShadow: kBoxShadow2,
-                          ),
+                        margin: EdgeInsets.only(right: 16.w),
+                        height: 130.h,
+                        width: 100.w,
+                        decoration: BoxDecoration(
+                          color: Color(0xff72CCD4),
+                          borderRadius: BorderRadius.circular(20.r),
+                          boxShadow: kBoxShadow2,
+                        ),
                         child: Column(
                           children: [
                             Container(
-                                padding: EdgeInsets.only(top: 10.h, left: 20.w, right: 20.w, bottom: 5.h),
+                                padding: EdgeInsets.only(
+                                    top: 10.h,
+                                    left: 20.w,
+                                    right: 20.w,
+                                    bottom: 5.h),
                                 alignment: Alignment.center,
-                                child: Image(image: AssetImage('images/breed.png'),height:80.h ,)),
+                                child: Image(
+                                  image: AssetImage('images/breed.png'),
+                                  height: 80.h,
+                                )),
                             Text('Breed',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontFamily: 'Sora',
-                                    color: Colors.white,))
+                                  fontSize: 18.sp,
+                                  fontFamily: 'Sora',
+                                  color: Colors.white,
+                                ))
                           ],
                         ),
                       ),
                     ),
                     GestureDetector(
-                      onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Reports()));},
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Reports()));
+                      },
                       child: Container(
                         height: 130.h,
                         width: 100.w,
                         margin: EdgeInsets.only(right: 16.w),
                         decoration: BoxDecoration(
-                          color: Color(0xffF9B895),
-                          borderRadius: BorderRadius.circular(20.r),
-                          boxShadow: kBoxShadow3
-                        ),
+                            color: Color(0xffF9B895),
+                            borderRadius: BorderRadius.circular(20.r),
+                            boxShadow: kBoxShadow3),
                         child: Column(
                           children: [
                             Container(
-                                padding: EdgeInsets.only(top: 10.h, left: 20.w, right: 20.w, bottom: 5.h),
+                                padding: EdgeInsets.only(
+                                    top: 10.h,
+                                    left: 20.w,
+                                    right: 20.w,
+                                    bottom: 5.h),
                                 alignment: Alignment.center,
-                                child: Image(image: AssetImage('images/report.png'),height: 80.h,)),
+                                child: Image(
+                                  image: AssetImage('images/report.png'),
+                                  height: 80.h,
+                                )),
                             Text('Reports',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontFamily: 'Sora',
-                                    color: Colors.white,))
+                                  fontSize: 18.sp,
+                                  fontFamily: 'Sora',
+                                  color: Colors.white,
+                                ))
                           ],
                         ),
                       ),
                     ),
                     GestureDetector(
-                      onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Dean()));},
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Dean()));
+                      },
                       child: Container(
                         height: 130.h,
                         width: 100.w,
                         decoration: BoxDecoration(
                             color: Color(0xffBAFA7A),
                             borderRadius: BorderRadius.circular(20.r),
-                            boxShadow: kBoxShadow4
-                        ),
+                            boxShadow: kBoxShadow4),
                         child: Column(
                           children: [
                             Container(
-                                padding: EdgeInsets.only(top: 10.h, left: 20.w, right: 20.w, bottom: 5.h),
+                                padding: EdgeInsets.only(
+                                    top: 10.h,
+                                    left: 20.w,
+                                    right: 20.w,
+                                    bottom: 5.h),
                                 alignment: Alignment.center,
-                                child: Image(image: AssetImage('images/dean.png'),height: 80.h,)),
+                                child: Image(
+                                  image: AssetImage('images/dean.png'),
+                                  height: 80.h,
+                                )),
                             Text('Dean',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 18.sp,
                                   fontFamily: 'Sora',
-                                  color: Colors.white,))
+                                  color: Colors.white,
+                                ))
                           ],
                         ),
                       ),
@@ -228,14 +275,22 @@ class _MainScreenState extends State<MainScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Top Doctor',style:TextStyle(fontSize: 20.sp,
-                  fontFamily: 'Sora',
-                  fontWeight: FontWeight.bold)),
-                  TextButton(onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorList()));
-                  }, child: Text('See all',style:TextStyle(
-                    fontSize:14.sp,
-                  )))
+                  Text('Top Doctor',
+                      style: TextStyle(
+                          fontSize: 20.sp,
+                          fontFamily: 'Sora',
+                          fontWeight: FontWeight.bold)),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DoctorList()));
+                      },
+                      child: Text('See all',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                          )))
                 ],
               ),
             ),

@@ -8,7 +8,7 @@ import 'intro_screen/intro.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 int? isviewed;
-Future <void> main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isviewed = prefs.getInt('Introduction');
@@ -25,12 +25,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(360,690),
-      builder:()=> MaterialApp(
+      designSize: Size(360, 690),
+      builder: (context, _) => MaterialApp(
         debugShowCheckedModeBanner: false,
         home: isviewed != 0 ? Introduction() : LoginScreen(),
       ),
     );
   }
 }
-

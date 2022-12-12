@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:happy_paws/model/user_model.dart';
-import 'package:telephony/telephony.dart';
+// import 'package:telephony/telephony.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Doc1 extends StatefulWidget {
@@ -77,17 +77,17 @@ class _Doc1State extends State<Doc1> {
       });
   }
 
-  final Telephony telephony = Telephony.instance;
-  void _sendSMS(String number, String message) async {
-    print(number);
+  // final Telephony telephony = Telephony.instance;
+  // void _sendSMS(String number, String message) async {
+  //   print(number);
 
-    // Check if a device is capable of sending SMS
-    bool? canSendSms = await telephony.isSmsCapable;
-    print(canSendSms);
+  //   // Check if a device is capable of sending SMS
+  //   bool? canSendSms = await telephony.isSmsCapable;
+  //   print(canSendSms);
 
-    telephony.sendSms(
-      to: number, message: message,);
-  }
+  //   telephony.sendSms(
+  //     to: number, message: message,);
+  // }
 
   _makeCALL() async {
     const url = 'tel:9876543211';
@@ -298,7 +298,7 @@ class _Doc1State extends State<Doc1> {
                                   onPressed: () {
                                     var date="${selectedDate.toLocal()}".split(' ')[0];
                                     var time='${_time.format(context)}';
-                                    _sendSMS("555-521-5554", " Hello Happy Paws User. Your Appointment has been scheduled successfully.\nDate: $date \nTime: $time  \n \nThank You. ");
+                                    // _sendSMS("555-521-5554", " Hello Happy Paws User. Your Appointment has been scheduled successfully.\nDate: $date \nTime: $time  \n \nThank You. ");
                                   },
                                   style: ElevatedButton.styleFrom(
                                     elevation: 3,

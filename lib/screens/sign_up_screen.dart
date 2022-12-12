@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,19 +17,18 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final _auth = FirebaseAuth.instance;
 
-  final _auth =FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
 
-  final _formKey= GlobalKey<FormState>();
-
-  final firstNameEditingController=new TextEditingController();
-  final secondNameEditingController=new TextEditingController();
+  final firstNameEditingController = new TextEditingController();
+  final secondNameEditingController = new TextEditingController();
   final emailEditingController = new TextEditingController();
-  final mobileNumberEditingController=new TextEditingController();
-  final passwordEditingController=new TextEditingController();
-  final confirmPasswordEditingController= new TextEditingController();
-  final petnameEditingController=new TextEditingController();
-  final addressEditingController= new TextEditingController();
+  final mobileNumberEditingController = new TextEditingController();
+  final passwordEditingController = new TextEditingController();
+  final confirmPasswordEditingController = new TextEditingController();
+  final petnameEditingController = new TextEditingController();
+  final addressEditingController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +38,19 @@ class _SignUpState extends State<SignUp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(onPressed:(){Navigator.pop(context);}, icon:Icon(Icons.arrow_back_ios)),
+            IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back_ios)),
             Container(
               padding: EdgeInsets.only(bottom: 10.0.h),
               child: Column(
                 children: [
                   Center(
                     child: Image(
-                      image: AssetImage('images/girl.png'),height:150.h,
+                      image: AssetImage('images/girl.png'),
+                      height: 150.h,
                     ),
                   ),
                 ],
@@ -63,16 +66,15 @@ class _SignUpState extends State<SignUp> {
                     physics: BouncingScrollPhysics(),
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 15.w, top: 15.h, bottom: 10.h),
-                        child: Text(
-                          'Sign-up',
-                          style:TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 24.sp,
-                            color: Color(0xff223843),
-                          )
-                        ),
+                        padding: EdgeInsets.only(
+                            left: 15.w, top: 15.h, bottom: 10.h),
+                        child: Text('Sign-up',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 24.sp,
+                              color: Color(0xff223843),
+                            )),
                       ),
                       Padding(
                         padding: kSignUpPadding,
@@ -98,8 +100,8 @@ class _SignUpState extends State<SignUp> {
                             }
                             return null;
                           },
-                          onSaved: (value){
-                            firstNameEditingController.text=value!;
+                          onSaved: (value) {
+                            firstNameEditingController.text = value!;
                           },
                         ),
                       ),
@@ -123,40 +125,40 @@ class _SignUpState extends State<SignUp> {
                             }
                             return null;
                           },
-                          onSaved: (value){
-                            secondNameEditingController.text=value!;
+                          onSaved: (value) {
+                            secondNameEditingController.text = value!;
                           },
                         ),
                       ),
                       Padding(
                         padding: kSignUpPadding,
                         child: TextFormField(
-                          controller: emailEditingController,
+                            controller: emailEditingController,
                             textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.email),
-                            hintText: 'Your Email',
-                            labelText: 'Email',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelStyle: kFloatingLabel,
-                            border: kTextFieldOutlined
-                          ),
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email),
+                                hintText: 'Your Email',
+                                labelText: 'Email',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                labelStyle: kFloatingLabel,
+                                border: kTextFieldOutlined),
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return ("Please Enter Your Email");
                               }
                               // reg expression for email validation
-                              if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                              if (!RegExp(
+                                      "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
                                   .hasMatch(value)) {
                                 return ("Please Enter a valid email");
                               }
                               return null;
                             },
-                          onSaved: (value){
-                            emailEditingController.text=value!;
-                          }
-                        ),
+                            onSaved: (value) {
+                              emailEditingController.text = value!;
+                            }),
                       ),
                       Padding(
                         padding: kSignUpPadding,
@@ -165,16 +167,17 @@ class _SignUpState extends State<SignUp> {
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.phone),
-                            hintText: 'Your Contact Number',
-                            labelText: 'Contact no.',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelStyle: kFloatingLabel,
-                            border: kTextFieldOutlined
-                          ),
-                          validator: (value){
-                            RegExp regex= new RegExp(r'(^(?:[+0]9)?[0-9]{10}$)');
-                            if(value!.isEmpty){
+                              prefixIcon: Icon(Icons.phone),
+                              hintText: 'Your Contact Number',
+                              labelText: 'Contact no.',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              labelStyle: kFloatingLabel,
+                              border: kTextFieldOutlined),
+                          validator: (value) {
+                            RegExp regex =
+                                new RegExp(r'(^(?:[+0]9)?[0-9]{10}$)');
+                            if (value!.isEmpty) {
                               return ('Please Enter your Phone Number');
                             }
                             if (!regex.hasMatch(value)) {
@@ -182,8 +185,8 @@ class _SignUpState extends State<SignUp> {
                             }
                             return null;
                           },
-                          onSaved: (value){
-                            mobileNumberEditingController.text=value!;
+                          onSaved: (value) {
+                            mobileNumberEditingController.text = value!;
                           },
                         ),
                       ),
@@ -193,13 +196,13 @@ class _SignUpState extends State<SignUp> {
                           controller: passwordEditingController,
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.vpn_key),
-                            hintText: 'Password',
-                            labelText: 'Password',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelStyle: kFloatingLabel,
-                            border: kTextFieldOutlined
-                          ),
+                              prefixIcon: Icon(Icons.vpn_key),
+                              hintText: 'Password',
+                              labelText: 'Password',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              labelStyle: kFloatingLabel,
+                              border: kTextFieldOutlined),
                           obscureText: true,
                           validator: (value) {
                             RegExp regex = new RegExp(r'^.{6,}$');
@@ -210,8 +213,8 @@ class _SignUpState extends State<SignUp> {
                               return ("Enter Valid Password(Min. 6 Character)");
                             }
                           },
-                          onSaved: (value){
-                            passwordEditingController.text=value!;
+                          onSaved: (value) {
+                            passwordEditingController.text = value!;
                           },
                         ),
                       ),
@@ -224,10 +227,10 @@ class _SignUpState extends State<SignUp> {
                               prefixIcon: Icon(Icons.vpn_key),
                               hintText: 'Confirm Password',
                               labelText: 'Confirm Password',
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               labelStyle: kFloatingLabel,
-                              border: kTextFieldOutlined
-                          ),
+                              border: kTextFieldOutlined),
                           obscureText: true,
                           validator: (value) {
                             if (confirmPasswordEditingController.text !=
@@ -236,8 +239,8 @@ class _SignUpState extends State<SignUp> {
                             }
                             return null;
                           },
-                          onSaved: (value){
-                            confirmPasswordEditingController.text=value!;
+                          onSaved: (value) {
+                            confirmPasswordEditingController.text = value!;
                           },
                         ),
                       ),
@@ -265,8 +268,8 @@ class _SignUpState extends State<SignUp> {
                             }
                             return null;
                           },
-                          onSaved: (value){
-                            petnameEditingController.text=value!;
+                          onSaved: (value) {
+                            petnameEditingController.text = value!;
                           },
                         ),
                       ),
@@ -293,19 +296,22 @@ class _SignUpState extends State<SignUp> {
                             }
                             return null;
                           },
-                          onSaved: (value){
-                            addressEditingController.text=value!;
+                          onSaved: (value) {
+                            addressEditingController.text = value!;
                           },
                         ),
                       ),
                       Padding(
-                        padding:EdgeInsets.symmetric(horizontal: 14.w,vertical: 10.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 14.w, vertical: 10.h),
                         child: SizedBox(
-                          width:double.infinity,
-                          height:ScreenUtil().setHeight(40),
-                          child: ElevatedButton(                                 //Login Button
+                          width: double.infinity,
+                          height: ScreenUtil().setHeight(40),
+                          child: ElevatedButton(
+                            //Login Button
                             onPressed: () {
-                             signUp(emailEditingController.text, passwordEditingController.text);
+                              signUp(emailEditingController.text,
+                                  passwordEditingController.text);
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Color(0xff223843),
@@ -335,16 +341,16 @@ class _SignUpState extends State<SignUp> {
 
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
-        await _auth
-            .createUserWithEmailAndPassword(email: email, password: password)
-            .then((value) => {postDetailsToFirestore()})
-            .catchError((e) {
-          Fluttertoast.showToast(msg: e!.message);
-        });
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => {postDetailsToFirestore()})
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.message);
+      });
     }
   }
-  postDetailsToFirestore() async {
 
+  postDetailsToFirestore() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
 
@@ -355,10 +361,10 @@ class _SignUpState extends State<SignUp> {
     userModel.uid = user.uid;
     userModel.firstName = firstNameEditingController.text;
     userModel.secondName = secondNameEditingController.text;
-    userModel.mobileNumber=mobileNumberEditingController.text;
-    userModel.password=passwordEditingController.text;
-    userModel.petName=petnameEditingController.text;
-    userModel.address=addressEditingController.text;
+    userModel.mobileNumber = mobileNumberEditingController.text;
+    userModel.password = passwordEditingController.text;
+    userModel.petName = petnameEditingController.text;
+    userModel.address = addressEditingController.text;
 
     await firebaseFirestore
         .collection("users")
@@ -368,7 +374,7 @@ class _SignUpState extends State<SignUp> {
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) =>LoginScreen()),
-            (route) => false);
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+        (route) => false);
   }
 }
