@@ -15,15 +15,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
 
   final _auth = FirebaseAuth.instance;
-
-
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -70,15 +68,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(left: 15.w, top: 10.h),
-                            child: Text(
-                                'Log-In',
+                            child: Text('Log-In',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontSize: 24.sp,
                                   fontWeight: FontWeight.w600,
                                   color: Color(0xff223843),
-                                )
-                            ),
+                                )),
                           ),
                           Padding(
                             padding: EdgeInsets.only(
@@ -90,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(30.r)),
+                                      BorderRadius.all(Radius.circular(30.r)),
                                 ),
                                 prefixIcon: Icon(Icons.email),
                                 hintText: 'User ID',
@@ -100,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   return ('Please Enter Your Email');
                                 }
                                 if (!RegExp(
-                                    "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                                        "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
                                     .hasMatch(value)) {
                                   return ("Please Enter a valid email");
                                 }
@@ -121,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(30.r)),
+                                      BorderRadius.all(Radius.circular(30.r)),
                                 ),
                                 prefixIcon: Icon(Icons.vpn_key),
                                 hintText: 'Password',
@@ -149,7 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: ElevatedButton(
                                 //Login Button
                                 onPressed: () {
-                                 signIn(emailController.text, passwordController.text);
+                                  signIn(emailController.text,
+                                      passwordController.text);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   primary: Color(0xff223843),
@@ -158,11 +155,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     borderRadius: BorderRadius.circular(30.r),
                                   ),
                                 ),
-                                child: Text('Login',
-                                    style: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontFamily: 'Montserrat',
-                                    )),
+                                child: loading != false
+                                    ? CircularProgressIndicator(
+                                        color: Colors.white,
+                                      )
+                                    : Text('Login',
+                                        style: TextStyle(
+                                          fontSize: 16.sp,
+                                          fontFamily: 'Montserrat',
+                                        )),
                               ),
                             ),
                           ),
@@ -197,11 +198,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           // SizedBox(
                           //   height:MediaQuery.of(context).size.height /5,
                           // ),
-
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom:16.0),
+                        padding: const EdgeInsets.only(bottom: 16.0),
                         child: Text(
                           'from HAPPY PAWS',
                           style: TextStyle(
@@ -224,18 +224,26 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void signIn(String email, String password) async {
+    setState(() {
+      loading = true;
+    });
     if (_formKey.currentState!.validate()) {
-        await _auth
-            .signInWithEmailAndPassword(email: email, password: password)
-            .then((uid) =>
-        {
-          Fluttertoast.showToast(msg: "Login Successful"),
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => MainScreen())),
-        }).catchError((e)
-        {
-        Fluttertoast.showToast(msg: e.message);
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) => {
+                Fluttertoast.showToast(msg: "Login Successful"),
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => MainScreen())),
+              })
+          .catchError((e) {
+        setState(() {
+          loading = false;
         });
-      }
+        Fluttertoast.showToast(msg: e.message);
+      });
     }
+    setState(() {
+      loading = false;
+    });
   }
+}

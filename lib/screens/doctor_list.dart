@@ -11,9 +11,10 @@ class DoctorList extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.tealAccent,
       appBar: AppBar(
-        iconTheme:IconThemeData(color:Colors.black87),
+        iconTheme: IconThemeData(color: Colors.black87),
         leadingWidth: 30,
-        title: Text('Available Doctors',style:TextStyle(fontFamily: 'Sora',color: Colors.black87)),
+        title: Text('Available Doctors',
+            style: TextStyle(fontFamily: 'Sora', color: Colors.black87)),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
@@ -25,7 +26,8 @@ class DoctorList extends StatelessWidget {
             child: Column(
               children: [
                 Center(
-                  child: Image(height:MediaQuery.of(context).size.height *.350,
+                  child: Image(
+                    height: MediaQuery.of(context).size.height * .350,
                     image: AssetImage('images/group.png'),
                   ),
                 ),
@@ -33,12 +35,12 @@ class DoctorList extends StatelessWidget {
             ),
           ),
           Expanded(
-            child:Container(
-              padding:EdgeInsets.symmetric(horizontal: 16.w, vertical:16.h),
-              decoration: kUpperLeftRightEdgeBoxDecoration,
-              child:ScrollCard(),
-            )
-          )
+              child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            decoration: kUpperLeftRightEdgeBoxDecoration,
+            child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(), child: ScrollCard()),
+          ))
         ],
       ),
     );

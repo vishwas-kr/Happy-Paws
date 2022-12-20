@@ -7,8 +7,19 @@ class UserModel {
   String? mobileNumber;
   String? petName;
   String? address;
+  String? image;
 
-  UserModel({this.uid, this.email, this.firstName, this.secondName, this.password, this.mobileNumber, this.address, this.petName});
+  UserModel({
+    this.uid,
+    this.email,
+    this.firstName,
+    this.secondName,
+    this.password,
+    this.mobileNumber,
+    this.address,
+    this.petName,
+    this.image,
+  });
 
   // receiving data from server
   factory UserModel.fromMap(map) {
@@ -21,6 +32,7 @@ class UserModel {
       mobileNumber: map['mobileNumber'],
       petName: map['petName'],
       address: map['address'],
+      image: map['image'],
     );
   }
 
@@ -31,10 +43,11 @@ class UserModel {
       'email': email,
       'firstName': firstName,
       'secondName': secondName,
-      'mobileNumber':mobileNumber,
-      'password':password,
-      'petName':petName,
-      'address':address,
+      'mobileNumber': mobileNumber,
+      'password': password,
+      'petName': petName,
+      'address': address,
+      'image': image,
     };
   }
 }

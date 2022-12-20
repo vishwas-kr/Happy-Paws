@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:happy_paws/components/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:happy_paws/model/petModel.dart';
 import 'package:happy_paws/model/user_model.dart';
 import 'package:happy_paws/screens/login_screen.dart';
 import 'package:happy_paws/screens/main_screen.dart';
@@ -18,6 +19,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _auth = FirebaseAuth.instance;
+  bool loading = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -175,9 +177,11 @@ class _SignUpState extends State<SignUp> {
                               labelStyle: kFloatingLabel,
                               border: kTextFieldOutlined),
                           validator: (value) {
+                            if (value!.length > 10) return ("Enter a");
+
                             RegExp regex =
                                 new RegExp(r'(^(?:[+0]9)?[0-9]{10}$)');
-                            if (value!.isEmpty) {
+                            if (value.isEmpty) {
                               return ('Please Enter your Phone Number');
                             }
                             if (!regex.hasMatch(value)) {
@@ -320,11 +324,13 @@ class _SignUpState extends State<SignUp> {
                                 borderRadius: BorderRadius.circular(30.r),
                               ),
                             ),
-                            child: Text('Submit',
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontFamily: 'Montserrat',
-                                )),
+                            child: loading != false
+                                ? CircularProgressIndicator(color: Colors.white)
+                                : Text('Submit',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontFamily: 'Montserrat',
+                                    )),
                           ),
                         ),
                       ),
@@ -340,14 +346,24 @@ class _SignUpState extends State<SignUp> {
   }
 
   void signUp(String email, String password) async {
+    setState(() {
+      loading = true;
+    });
     if (_formKey.currentState!.validate()) {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) => {postDetailsToFirestore()})
+          .then((value) =>
+              {postPetDetailsToFireStore(), postDetailsToFirestore()})
           .catchError((e) {
+        setState(() {
+          loading = false;
+        });
         Fluttertoast.showToast(msg: e!.message);
       });
     }
+    setState(() {
+      loading = false;
+    });
   }
 
   postDetailsToFirestore() async {
@@ -365,6 +381,7 @@ class _SignUpState extends State<SignUp> {
     userModel.password = passwordEditingController.text;
     userModel.petName = petnameEditingController.text;
     userModel.address = addressEditingController.text;
+    // userModel.image = "";
 
     await firebaseFirestore
         .collection("users")
@@ -376,5 +393,29 @@ class _SignUpState extends State<SignUp> {
         (context),
         MaterialPageRoute(builder: (context) => LoginScreen()),
         (route) => false);
+  }
+////////////////////////////////////////DEFAULT PET DETAILS///
+
+  postPetDetailsToFireStore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    PetModel petModel = PetModel();
+
+    petModel.uid = user!.uid;
+    petModel.petName = petnameEditingController.text;
+    petModel.petAge = "?";
+    petModel.petGender = "?";
+    petModel.petHealth = "?";
+    //petModel.petImage = "?";
+    petModel.petNetured = "?";
+    petModel.petSymptoms = "?";
+    petModel.petBreed = '?';
+    petModel.petSize = "?";
+
+    await firebaseFirestore
+        .collection("petDetails")
+        .doc(user.uid)
+        .set(petModel.toMap());
   }
 }

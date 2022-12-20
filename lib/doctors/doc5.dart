@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:happy_paws/model/user_model.dart';
@@ -86,6 +87,14 @@ class _Doc5State extends State<Doc5> {
   //   telephony.sendSms(
   //     to: number, message: message,);
   // }
+  void sending_SMS(String msg, List<String> list_receipents) async {
+    String send_result = await sendSMS(
+            message: msg, recipients: list_receipents, sendDirect: true)
+        .catchError((err) {
+      print(err);
+    });
+    print(send_result);
+  }
 
   _makeCALL() async {
     const url = 'tel:9876543211';
@@ -139,7 +148,7 @@ class _Doc5State extends State<Doc5> {
                   indent: 50.w,
                   endIndent: 50.w,
                 ),
-                Text('Doc. Rouf Khan',
+                Text('Doc. RJ Khan',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontFamily: 'Shadows Into Light', fontSize: 22.sp)),
@@ -300,7 +309,7 @@ class _Doc5State extends State<Doc5> {
                                 fontWeight: FontWeight.bold)),
                         SizedBox(height: 10.h),
                         Text(
-                            'Dr. Rouf Khan is a highly qualified and experienced veterinarian from India. He is a specailist in treating Exotic Animals.',
+                            'Dr. RJ Khan is a highly qualified and experienced veterinarian from India. He is a specailist in treating Exotic Animals.',
                             style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 color: Colors.blueGrey)),
@@ -375,6 +384,9 @@ class _Doc5State extends State<Doc5> {
                                           .split(' ')[0];
                                       var time = '${_time.format(context)}';
                                       // _sendSMS("${loggedInUser.mobileNumber}", " Hello Happy Paws User. Your Appointment has been scheduled successfully.\nDate: $date \nTime: $time  \n \nThank You. ");
+                                      sending_SMS(
+                                          'Hello Happy Paws User. Your Appointment has been scheduled successfully.\nDate: $date \nTime: $time  \n \nThank You. ',
+                                          ['5555215554']);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       elevation: 3,

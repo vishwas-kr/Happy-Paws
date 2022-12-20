@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:happy_paws/model/user_model.dart';
 //import 'package:telephony/telephony.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Doc2 extends StatefulWidget {
   const Doc2({Key? key}) : super(key: key);
@@ -87,10 +89,19 @@ class _Doc2State extends State<Doc2> {
   //     to: number, message: message,);
   // }
 
+  void sending_SMS(String msg, List<String> list_receipents) async {
+    String send_result = await sendSMS(
+            message: msg, recipients: list_receipents, sendDirect: true)
+        .catchError((err) {
+      print(err);
+    });
+    print(send_result);
+  }
+
   _makeCALL() async {
-    const url = 'tel:9876543211';
-    if (await canLaunch(url)) {
-      await launch(url);
+    const url = 'tel:+91 9876543211';
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
     } else {
       throw 'Could not launch $url';
     }
@@ -140,7 +151,7 @@ class _Doc2State extends State<Doc2> {
                   indent: 50.w,
                   endIndent: 50.w,
                 ),
-                Text('Doc. Suman Bisoi',
+                Text('Doc. Thomas Grey',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontFamily: 'Shadows Into Light', fontSize: 22.sp)),
@@ -301,7 +312,7 @@ class _Doc2State extends State<Doc2> {
                                 fontWeight: FontWeight.bold)),
                         SizedBox(height: 10.h),
                         Text(
-                            'Dr. Suman Bisoi is a highly qualified and experienced veterinarian from Chicago. He ia also a reputed member of Animal Welfare Community.',
+                            'Dr. Thomas Grey is a highly qualified and experienced veterinarian from Chicago. He ia also a reputed member of Animal Welfare Community.',
                             style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 color: Colors.blueGrey)),
@@ -376,6 +387,9 @@ class _Doc2State extends State<Doc2> {
                                           .split(' ')[0];
                                       var time = '${_time.format(context)}';
                                       // _sendSMS("${loggedInUser.mobileNumber}", " Hello Happy Paws User. Your Appointment has been scheduled successfully.\nDate: $date \nTime: $time  \n \nThank You. ");
+                                      sending_SMS(
+                                          'Hello Happy Paws User. Your Appointment has been scheduled successfully.\nDate: $date \nTime: $time  \n \nThank You. ',
+                                          ['5555215554']);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       elevation: 3,
